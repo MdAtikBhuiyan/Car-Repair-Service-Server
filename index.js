@@ -120,10 +120,8 @@ client.connect(err => {
             })
     })
 
-    // 
-
-     // is admin or not
-     app.post('/isAdmin', (req, res) => {
+    // is admin or not
+    app.post('/isAdmin', (req, res) => {
         const email = req.body.email;
         adminCollection.find({ email: email })
             .toArray((err, admin) => {
@@ -132,43 +130,23 @@ client.connect(err => {
     })
 
     // update status
-
-    // app.post('/updateStatus',(req,res) => {
-    //     const id = ObjectID(req.body.updateId);
-    //     const status = req.body.status;
-    //     console.log("Update",id,status);
-    //     bookedCollection.updateOne({_id:id}, {$set: {status:status} })
-    //     .then( result => {
-    //         console.log(result);
-    //         res.send(result.modifiedCount > 0)
-    //         // res.redirect('/')
-    //     })
-
-    app.patch('/updateStatus',(req,res) => {
+    app.patch('/updateStatus', (req, res) => {
 
         const serviceId = ObjectID(req.body.updateId);
         const status = req.body.status;
-        console.log("Update",serviceId,status);
-        bookedCollection.updateOne({_id: serviceId},
-        {
-            $set: {status:status},
-            $currentDate:{'lastModified':true}
-        })
-        // (err,result) => {
-        //     if(err){
-        //         console.log('err');
-        //     }
-        //     else{
-        //          console.log('modifiedCount',result.modifiedCount);
-        //     }
-        // })
-        .then( result => {
-            console.log(result);
-            // console.log(modifiedCount);
-            res.send(result.modifiedCount > 0)
-        })
-        .catch(err => console.log('err',err))
-        
+        console.log("Update", serviceId, status);
+        bookedCollection.updateOne({ _id: serviceId },
+            {
+                $set: { status: status },
+                $currentDate: { 'lastModified': true }
+            })
+
+            .then(result => {
+                console.log(result);
+                res.send(result.modifiedCount > 0)
+            })
+            .catch(err => console.log('err', err))
+
     })
 
 
